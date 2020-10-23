@@ -1,0 +1,16 @@
+FROM mysql:5.7
+
+ARG db_name
+ARG db_user=user
+ARG db_password=password
+ARG db_root_password=root
+ARG db_port=3306
+
+ENV MYSQL_DATABASE=${db_name}
+ENV MYSQL_USER=${db_user}
+ENV MYSQL_PASSWORD=${db_password}
+ENV MYSQL_ROOT_PASSWORD=${db_root_password}
+
+EXPOSE $db_port
+
+CMD ["--default-authentication-plugin=mysql_native_password"]

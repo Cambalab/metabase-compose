@@ -2,31 +2,28 @@ version: '3.3'
 
 services:
   db:
-    image: '${DB_DOCKER_IMAGE}'
+    build:
+      context: .
+      dockerfile: 'Dockerfile-${DB_TYPE}'
+      args:
+        db_type: ${DB_TYPE}
+        db_name: ${DB_NAME}
+        db_user: ${DB_USER}
+        db_password: ${DB_PASSWORD}
+        db_port: ${DB_PORT}
     restart: always
-    command: '${DB_INIT_COMMAND:-}'
-    environment:
-      - '${DB_ENV_NAME_DATABASE}=${DB_NAME}'
-      - '${DB_ENV_NAME_USER}=${DB_USER}'
-      - '${DB_ENV_NAME_PASSWORD}=${DB_PASSWORD}'
-      - '${DB_ENV_NAME_ROOT_PASSWORD}=${DB_ROOT_PASSWORD}'
-    ports:
-      # <Port exposed>:<Port running inside container>
-      - '${DB_OUTSIDE_PORT}:${DB_INSIDE_PORT}'
-    expose:
-      # Opens the given port on the container
-      - '${DB_OUTSIDE_PORT}'
     volumes:
-      # Volumes where database data will be persisted
-      - 'db-data:${DB_INSIDE_VOLUME}'
+      - type: volume
+        source: ${DB_OUTSIDE_VOLUME}
+        target: ${DB_INSIDE_VOLUME}
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - '${ADMINER_OUTSIDE_PORT}:${ADMINER_INSIDE_PORT}'
+      - '${ADMINER_PORT}:8080'
     depends_on:
-      - "db"
+      - 'db'
 
   metabase:
     image: metabase/metabase
@@ -35,8 +32,8 @@ services:
       MB_DB_FILE: '${MB_DB_FILE}'
       MB_DB_TYPE: '${MB_DB_TYPE}'
       MB_DB_DBNAME: '${DB_NAME}'
-      MB_DB_PORT: '${DB_OUTSIDE_PORT}'
-      MB_DB_USER: '${DB_ROOT_USER}'
+      MB_DB_PORT: '${MB_INSIDE_PORT}'
+      MB_DB_USER: '${DB_USER}'
       MB_DB_HOST: 'db'
       MB_DB_PASS: '${DB_ROOT_PASSWORD}'
     ports:

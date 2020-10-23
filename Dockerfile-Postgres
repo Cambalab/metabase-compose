@@ -1,0 +1,11 @@
+FROM postgres
+
+ARG db_name
+ARG db_user=postgres
+ARG db_password=postgres
+
+ENV POSTGRES_DB=${db_name}
+ENV POSTGRES_USER=${db_user}
+ENV POSTGRES_PASSWORD=${db_password}
+
+RUN echo "TEST COMMANDDDD: ${db_name}"
