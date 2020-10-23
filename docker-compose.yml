@@ -2,26 +2,52 @@ version: '3.3'
 
 services:
   db:
-    image: mysql:5.7
-    # restart: always
-    command: --default-authentication-plugin=mysql_native_password
+    image: '${DB_DOCKER_IMAGE}'
+    restart: always
+    command: '${DB_INIT_COMMAND:-}'
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'root'
+      - '${DB_ENV_NAME_DATABASE}=${DB_NAME}'
+      - '${DB_ENV_NAME_USER}=${DB_USER}'
+      - '${DB_ENV_NAME_PASSWORD}=${DB_PASSWORD}'
+      - '${DB_ENV_NAME_ROOT_PASSWORD}=${DB_ROOT_PASSWORD}'
     ports:
-      - '3306:3306'
+      # <Port exposed>:<Port running inside container>
+      - '${DB_OUTSIDE_PORT}:${DB_INSIDE_PORT}'
     expose:
-      - '3306'
+      # Opens the given port on the container
+      - '${DB_OUTSIDE_PORT}'
     volumes:
-      - mysql-data:/var/lib/mysql
+      # Volumes where database data will be persisted
+      - 'db-data:${DB_INSIDE_VOLUME}'
 
   adminer:
     image: adminer
-    # restart: always
+    restart: always
     ports:
-      - 8080:8080
+      - '${ADMINER_OUTSIDE_PORT}:${ADMINER_INSIDE_PORT}'
+    depends_on:
+      - "db"
+
+  metabase:
+    image: metabase/metabase
+    restart: always
+    environment:
+      MB_DB_FILE: '${MB_DB_FILE}'
+      MB_DB_TYPE: '${MB_DB_TYPE}'
+      MB_DB_DBNAME: '${DB_NAME}'
+      MB_DB_PORT: '${DB_OUTSIDE_PORT}'
+      MB_DB_USER: '${DB_ROOT_USER}'
+      MB_DB_HOST: 'db'
+      MB_DB_PASS: '${DB_ROOT_PASSWORD}'
+    ports:
+      # <Port exposed>:<Port running inside container>
+      - '${MB_OUTSIDE_PORT}:${MB_INSIDE_PORT}'
+    volumes:
+      # Volumes where Metabase data will be persisted
+      - 'mb-data:/metabase-data'
+    depends_on:
+      - 'db'
 
 volumes:
-  mysql-data:
+  db-data:
+  mb-data:
