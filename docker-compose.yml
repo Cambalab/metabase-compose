@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: 'Dockerfile-${DB_TYPE}'
       args:
-        db_type: ${DB_TYPE}
         db_name: ${DB_NAME}
         db_user: ${DB_USER}
         db_password: ${DB_PASSWORD}
@@ -30,15 +29,15 @@ services:
     restart: always
     environment:
       MB_DB_FILE: '${MB_DB_FILE}'
-      MB_DB_TYPE: '${MB_DB_TYPE}'
+      MB_DB_TYPE: '${DB_TYPE}'
       MB_DB_DBNAME: '${DB_NAME}'
-      MB_DB_PORT: '${MB_INSIDE_PORT}'
+      MB_DB_PORT: '${DB_PORT}'
       MB_DB_USER: '${DB_USER}'
       MB_DB_HOST: 'db'
       MB_DB_PASS: '${DB_ROOT_PASSWORD}'
     ports:
       # <Port exposed>:<Port running inside container>
-      - '${MB_OUTSIDE_PORT}:${MB_INSIDE_PORT}'
+      - '${MB_PORT}:3000'
     volumes:
       # Volumes where Metabase data will be persisted
       - 'mb-data:/metabase-data'
