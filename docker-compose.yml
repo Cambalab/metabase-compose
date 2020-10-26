@@ -34,7 +34,7 @@ services:
       MB_DB_PORT: '${DB_PORT}'
       MB_DB_USER: '${DB_USER}'
       MB_DB_HOST: 'db'
-      MB_DB_PASS: '${DB_ROOT_PASSWORD}'
+      MB_DB_PASS: '${DB_PASSWORD}'
     ports:
       # <Port exposed>:<Port running inside container>
       - '${MB_PORT}:3000'
