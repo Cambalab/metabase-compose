@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 
 services:
   db:
@@ -35,6 +35,7 @@ services:
       MB_DB_USER: '${DB_USER}'
       MB_DB_HOST: 'db'
       MB_DB_PASS: '${DB_PASSWORD}'
+      JAVA_TIMEZONE: '${MB_JAVA_TIMEZONE}'
     ports:
       # <Port exposed>:<Port running inside container>
       - '${MB_PORT}:3000'
