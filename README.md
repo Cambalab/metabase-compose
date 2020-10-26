@@ -12,7 +12,7 @@
   <a href="https://github.com/Cambalab/metabase-compose/blob/main/.github/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="License"></a>
 </p>
 
-# Dockerized Metabase
+# Metabase Compose
 
 ## About
 
