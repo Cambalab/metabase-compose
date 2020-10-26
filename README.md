@@ -1,7 +1,7 @@
 
 <p align="center">
   <a target="_blank" rel="noopener noreferrer">
-    <img width="" src="public/docker-compose-metabase.png" alt="Docker+Compose+Metabase" />
+    <img width="75%" src="public/docker-compose-metabase.png" alt="Docker+Compose+Metabase" />
   </a>
 </p>
 
