@@ -9,6 +9,7 @@ services:
         db_name: ${DB_NAME}
         db_user: ${DB_USER}
         db_password: ${DB_PASSWORD}
+        db_root_password: ${DB_ROOT_PASSWORD}
         db_port: ${DB_PORT}
     restart: always
     volumes:
