@@ -108,3 +108,8 @@ If you'd like to improve or add features on this project feel free to open an [i
   <strong>👩‍💻 with :green_heart: :purple_heart: :heart: by <a href="https://camba.coop" target="_blank" rel="noopener noreferrer"><img width="20" src="http://camba.coop/assets/signature/no_text_logo.png" /> cambá.coop</a> :earth_americas: Buenos Aires, Argentina
   </strong>
 </p>
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
